@@ -1,0 +1,57 @@
+#include "pch.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+struct temp_measurement
+{
+	int year,month,day;
+	string location;
+	float temperature;
+
+};
+
+vector <temp_measurement> data1;
+
+void print_temp()
+{
+	temp_measurement a;
+	for (int i = 0; i < data1.size(); i++)
+	{
+		a = data1[i];
+		cout << a.year << "." << a.month << "." << a.day << " " << a.location << " " << a.temperature << endl;
+	}
+}
+int main()
+{
+	ifstream in("in.txt");
+	if (!in.is_open())
+	{
+		cout << "File is not opened";
+		return 1;
+	}
+	temp_measurement a;
+	string line;
+	int n;
+	getline(in, line, '\n');
+	n = stoi(line);
+	for (int i = 0; i < n; i++)
+	{
+		getline(in, line, '.');
+		a.year = stoi(line);
+		getline(in, line, '.');
+		a.month = stoi(line);
+		getline(in, line, ' ');
+		a.day = stoi(line);
+		getline(in, line, ' ');
+		a.location = line;
+		getline(in, line);
+		a.temperature = stof(line);
+		data1.push_back(a);
+	}
+	print_temp();
+	return 0;
+}
